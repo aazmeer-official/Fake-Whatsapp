@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZERO | Message Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .system-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #22c55e;
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-6 text-slate-200">
+
+    <div class="w-full max-w-lg glass-card rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-6 border-b border-slate-700/50 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="/chats" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <h2 class="text-lg font-bold">Message Details</h2>
+            </div>
+            <span class="text-[10px] text-blue-400 uppercase tracking-widest font-mono">ID: <%= chat._id.toString().slice(-6) %></span>
+        </div>
+
+        <div class="p-8 space-y-6">
+            <div class="space-y-1">
+                <p class="text-xs text-slate-500 uppercase font-semibold">Sender</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold">
+                        <%= chat.from.toUpperCase().slice(0,2) %>
+                    </div>
+                    <p class="text-md font-medium text-blue-100"><%= chat.from %></p>
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <p class="text-xs text-slate-500 uppercase font-semibold">Message Content</p>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 text-sm leading-relaxed">
+                    <%= chat.msg %>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <p class="text-xs text-slate-500 uppercase font-semibold">Timestamp</p>
+                    <p class="text-sm font-mono"><%= chat.created_at.toTimeString().split(' ')[0] %></p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-slate-500 uppercase font-semibold">Status</p>
+                    <p class="text-sm flex items-center"><span class="system-dot"></span>Verified</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-slate-900/30 flex gap-3">
+            <a href="/chats" class="flex-1 bg-slate-700 hover:bg-slate-600 text-center py-3 rounded-xl text-sm font-bold transition">
+                Return to Ride
+            </a>
+            <form action="/chats/<%= chat._id %>?_method=DELETE" method="POST" class="flex-1">
+                <button type="submit" class="w-full bg-red-900/40 hover:bg-red-800/60 text-red-400 py-3 rounded-xl text-sm font-bold border border-red-900/50 transition">
+                    Purge Record
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
